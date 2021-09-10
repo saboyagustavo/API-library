@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import booksRouter from './routes/books.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -23,11 +24,12 @@ database.data = database.data || { books: [] };
 await database.write();
 
 const app = express();
-
 app.db = database;
+
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
+app.use('/books', booksRouter);
 
 const PORT = process.env.PORT || 4444;
 app.listen(PORT, () => console.log(`The server is running on port ${PORT}`));
