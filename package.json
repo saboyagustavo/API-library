@@ -1,0 +1,27 @@
+{
+  "name": "swagger-api-library",
+  "version": "1.0.0",
+  "description": "An ExpressJS CRUD application and document it using Swagger. Using swagger-jsdoc to write the specs and express-swagger-ui to show the Swagger interface.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saboyagustavo/API-library.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saboyagustavo/API-library/issues"
+  },
+  "homepage": "https://github.com/saboyagustavo/API-library#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "lowdb": "^2.1.0",
+    "morgan": "^1.10.0",
+    "nanoid": "^3.1.25",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6"
+  }
+}
