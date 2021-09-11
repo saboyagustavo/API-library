@@ -6,6 +6,54 @@ const { chain: db } = database;
 const router = Router();
 const idLength = 8;
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    Book:
+ *      type: object
+ *      required:
+ *        - title
+ *        - author
+ *      properties:
+ *        id:
+ *          type: string
+ *          description: The auto-generated id of the book
+ *        title:
+ *          type: string
+ *          description: The book title
+ *        author:
+ *          type: string
+ *          description: The book author
+ *      example:
+ *        id: d213haK
+ *        title: Clean Code
+ *        author: Robert C. Martin
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Books
+ *   description: The books managing API
+ */
+
+/**
+ * @swagger
+ * /books:
+ *   get:
+ *     summary: Returns the list of all the books
+ *     tags: [Books]
+ *     responses:
+ *       200:
+ *         description: The list of the books
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Book'
+ */
 router.get('/', (request, response) => {
   const books = db.get('books');
   return response.status(200).send(books);
