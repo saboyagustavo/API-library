@@ -1,5 +1,5 @@
 import { join, dirname } from 'path';
-import { Low, JSONFileSync } from 'lowdb';
+import { Low, JSONFile } from 'lowdb';
 import { fileURLToPath } from 'url';
 import lodash from 'lodash';
 
@@ -7,7 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 //Use JSON file for storage
 const dbFile = join(__dirname, 'db.json');
-const adapter = new JSONFileSync(dbFile);
+const adapter = new JSONFile(dbFile);
 const database = new Low(adapter);
 
 //Read data from JSON file, this will set db.data content
