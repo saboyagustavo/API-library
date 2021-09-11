@@ -61,6 +61,39 @@ router.get('/', (request, response) => {
 
 /**
  * @swagger
+ * /books/{id}:
+ *   get:
+ *     summary: Get the book by id
+ *     tags: [Books]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The book id
+ *     responses:
+ *       200:
+ *         description: The book description by id
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Book'
+ *       404:
+ *         description: The book was not found
+ */
+router.get('/:id', (request, response) => {
+  const book = db.get('books').find({ id: request.params.id }).value();
+
+  if (!book) {
+    return response.status(404).send({ error: 'The book was not found!' });
+  }
+
+  return response.status(200).send(book);
+});
+
+/**
+ * @swagger
  * /books:
  *   post:
  *     summary: Create a new book
@@ -106,22 +139,45 @@ router.post('/', async (request, response) => {
   }
 });
 
-router.get('/:id', (request, response) => {
-  const book = db.get('books').find({ id: request.params.id }).value();
-
-  if (!book) {
-    return response.status(404).send({ error: 'Book not found!' });
-  }
-
-  return response.status(200).send(book);
-});
-
+/**
+ * @swagger
+ * /books/{id}:
+ *  put:
+ *    summary: Update the book by the id
+ *    tags: [Books]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: The book id
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Book'
+ *    responses:
+ *      200:
+ *        description: The book was updated
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Book'
+ *      404:
+ *        description: The book was not found
+ *      422:
+ *        description: Missing required information about the book
+ *      500:
+ *        description: Some error happened
+ */
 router.put('/:id', async (request, response) => {
   try {
     const targetBook = db.get('books').find({ id: request.params.id });
 
     if (!targetBook) {
-      return response.status(404).send({ error: 'Book not found!' });
+      return response.status(404).send({ error: 'The book was not found!' });
     }
 
     const { title, author } = request.body;
@@ -145,6 +201,26 @@ router.put('/:id', async (request, response) => {
   }
 });
 
+/**
+ * @swagger
+ * /books/{id}:
+ *   delete:
+ *     summary: Remove the book by id
+ *     tags: [Books]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The book id
+ *
+ *     responses:
+ *       200:
+ *         description: The book was deleted
+ *       404:
+ *         description: The book was not found
+ */
 router.delete('/:id', async (request, response) => {
   try {
     const targetBook = db.get('books').find({ id: request.params.id }).value();
