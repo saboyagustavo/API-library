@@ -73,4 +73,20 @@ router.put('/:id', async (request, response) => {
   }
 });
 
+router.delete('/:id', async (request, response) => {
+  try {
+    const targetBook = db.get('books').find({ id: request.params.id }).value();
+
+    if (!targetBook) {
+      return response.status(404).send({ error: 'Book not found!' });
+    }
+
+    await db.get('books').remove({ id: request.params.id }).value();
+    await database.write();
+
+    response.sendStatus(200);
+  } catch (error) {
+    return response.status(500).send({ error: error.message });
+  }
+});
 export default router;
