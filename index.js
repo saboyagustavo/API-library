@@ -1,7 +1,6 @@
 import { join, dirname } from 'path';
 import { Low, JSONFileSync } from 'lowdb';
 import { fileURLToPath } from 'url';
-
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -20,7 +19,6 @@ await database.read();
 //If file.json doesn't exists, db.data will be null
 //So set the default data
 database.data = database.data || { books: [] };
-
 await database.write();
 
 const app = express();
