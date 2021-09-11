@@ -59,6 +59,30 @@ router.get('/', (request, response) => {
   return response.status(200).send(books);
 });
 
+/**
+ * @swagger
+ * /books:
+ *   post:
+ *     summary: Create a new book
+ *     tags: [Books]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Book'
+ *     responses:
+ *       201:
+ *         description: The book was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Book'
+ *       422:
+ *         description: Missing required information about the book
+ *       500:
+ *         description: Some server error
+ */
 router.post('/', async (request, response) => {
   try {
     const { title, author } = request.body;
